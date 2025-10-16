@@ -1,0 +1,35 @@
+.login-header-title {
+    margin-bottom: .5rem;
+}
+
+.login-accent {
+    width: 72px;
+    height: 3px;
+    /* base thickness */
+    background-color: #ff8d0b;
+    /* primary accent */
+    border-radius: 999px;
+}
+
+@media (min-width: 768px) {
+    .login-accent {
+        height: 4px;
+        width: 84px;
+    }
+
+    /* standard tablet thickness */
+}
+
+@media (min-width: 992px) {
+    .login-accent {
+        height: 6px;
+        width: 96px;
+    }
+
+    /* standard desktop thickness */
+}
+
+.login-footer {
+    /* border-top: 2px solid #ff8d0b; */
+    background-color: #0f172a;
+}

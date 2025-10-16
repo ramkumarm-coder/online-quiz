@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{fragments/_layout :: layout(~{::pageContent}, ~{::pageCss}, ~{::pageJs}, ${title})}">
+
+<!-- ✅ Page-specific CSS -->
+<th:block th:fragment="pageCss">
+    <style>
+        .error {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .form-container {
+            max-width: 600px;
+        }
+    </style>
+</th:block>
+
+<!-- ✅ Page Content -->
+<th:block th:fragment="pageContent">
+    <div class="container mt-4 form-container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="fw-semibold mb-0">Add New Quiz</h3>
+            <a th:href="@{/admin/dashboard}" class="btn btn-outline-secondary btn-sm">← Back to Dashboard</a>
+        </div>
+
+        <!-- Form -->
+        <form th:action="@{/admin/create-quiz}" th:object="${quiz}" method="post" novalidate>
+
+            <!-- Global Errors -->
+            <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+                <ul class="mb-0">
+                    <li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+                </ul>
+            </div>
+
+            <!-- Field: Title -->
+            <div class="mb-3">
+                <label class="form-label">Title <span class="text-danger">*</span></label>
+                <input type="text" th:field="*{title}" class="form-control" placeholder="Enter quiz title"/>
+                <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+            </div>
+
+            <!-- Field: Description -->
+            <div class="mb-3">
+                <label class="form-label">Description <span class="text-danger">*</span></label>
+                <textarea th:field="*{description}" class="form-control" rows="3"
+                          placeholder="Enter quiz description"></textarea>
+                <div class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+            </div>
+
+            <!-- Field: Time Limit -->
+            <div class="mb-3">
+                <label class="form-label">Time Limit (minutes) <span class="text-danger">*</span></label>
+                <input type="number" th:field="*{timeLimitMinutes}" class="form-control" placeholder="e.g., 30" min="1" max="300"/>
+                <div class="error" th:if="${#fields.hasErrors('timeLimitMinutes')}" th:errors="*{timeLimitMinutes}"></div>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-primary">Create Quiz</button>
+            <a th:href="@{/admin/dashboard}" class="btn btn-outline-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</th:block>
+
+<!-- ✅ Page-specific JS (optional) -->
+<th:block th:fragment="pageJs"></th:block>
+
+</html>

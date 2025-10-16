@@ -1,0 +1,31 @@
+.header-accent {
+    border-bottom: 2px solid #ff8d0b;
+}
+
+.footer-accent {
+    border-top: 2px solid #ff8d0b;
+}
+
+@media (min-width: 768px) {
+    .header-accent {
+        border-bottom-width: 3px;
+    }
+
+    .footer-accent {
+        border-top-width: 3px;
+    }
+}
+
+@media (min-width: 992px) {
+    .header-accent {
+        border-bottom-width: 4px;
+    }
+
+    .footer-accent {
+        border-top-width: 4px;
+    }
+}
+
+.login-footer {
+    background-color: #0f172a;
+}

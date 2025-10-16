@@ -1,0 +1,80 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    th:fragment="layout (~{::pageContent}, ~{::pageCss}, ~{::pageJs}, title)">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title from page -->
+    <title th:text="${title} + ' | Online Quiz App'">Online Quiz App</title>
+
+    <!-- CSRF Token -->
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap-5.3.2/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/fontawesome-free-6.7.2-web/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/site.css}">
+
+    <th:block th:replace="~{::pageCss}"></th:block>
+</head>
+
+<body>
+    <div class="d-flex flex-column min-vh-100">
+        <header class="header-accent py-3" role="banner" aria-label="Application header">
+            <div class="container d-flex align-items-center justify-content-between gap-2">
+                <h1 class="h4 m-0">Online Quiz Application</h1>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-muted small" sec:authentication="name">Guest</span>
+                    <a th:href="@{/logout}" class="btn btn-sm btn-outline-dark">Logout</a>
+                </div>
+            </div>
+        </header>
+
+        <nav aria-label="breadcrumb" class="container py-2">
+            <div class="">
+                <ol class="breadcrumb m-0 small">
+                    <li class="breadcrumb-item">
+                        <a th:href="@{/}" class="text-decoration-none" style="color: #ff8d0b;">
+                            <i class="fa-solid fa-house"></i>
+                        </a>
+                    </li>
+
+                    <!-- Dynamic Breadcrumbs -->
+                    <li th:each="crumb, stat : ${breadcrumbs}"
+                        th:classappend="${stat.last} ? 'breadcrumb-item active' : 'breadcrumb-item'"
+                        th:remove="${crumb == null} ? all : none">
+
+                        <a th:if="${crumb.hasUrl() and !stat.last}" th:href="${crumb.url}" th:text="${crumb.label}">
+                        </a>
+
+                        <span th:if="${stat.last or !crumb.hasUrl()}" th:text="${crumb.label}">
+                        </span>
+                    </li>
+                </ol>
+            </div>
+            <h2 class="h5 mb-1 mt-3" th:text="${pageTitle}">Page Title</h2>
+        </nav>
+
+        <!-- Main content -->
+        <main class="d-flex flex-fill flex-column mt-4 container">
+            <th:block th:replace="~{::pageContent}"></th:block>
+        </main>
+
+        <footer class="login-footer mt-5 py-3" role="contentinfo" aria-label="Footer">
+            <div class="container text-center">
+                <small class="text-white">© 2025 Online Quiz Application</small>
+            </div>
+        </footer>
+    </div>
+
+    <script th:src="@{/assets/vendor/jquery/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/assets/vendor/bootstrap-5.3.2/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/vendor/fontawesome-free-6.7.2-web/js/all.min.js}"></script>
+
+    <th:block th:replace="~{::pageJs}"></th:block>
+</body>
+
+</html>

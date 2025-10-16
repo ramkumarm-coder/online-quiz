@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{fragments/_layout :: layout(~{::pageContent}, ~{::pageCss}, ~{::pageJs}, ${title})}">
+
+<th:block th:fragment="pageCss">
+    <link rel="stylesheet" th:href="@{/assets/css/admin-dashboard.css}">
+</th:block>
+
+<th:block th:fragment="pageContent">
+    <section class="d-flex flex-fill flex-column">
+        <div class="add-quiz-box d-flex justify-content-end">
+            <a class="btn-brand" th:href="@{/admin/create-quiz}" aria-label="Add a new quiz">
+                + Add Quiz
+            </a>
+        </div>
+
+        <div class="avail-quizzes">
+            <h4 class="h5 mb-3 section-title">Available Quizzes</h4>
+
+            <div th:if="${#lists.isEmpty(quizzes)}" class="alert alert-info">
+                No quizzes available. Click <strong>Add Quiz</strong> to create one.
+            </div>
+            <div class="">
+                <div class="row g-3" th:if="${!#lists.isEmpty(quizzes)}">
+                    <div class="col-md-4" th:each="quiz : ${quizzes}">
+                        <div class="quiz-card p-3 h-100">
+                            <h5 class="fw-bold" th:text="${quiz.title}">Quiz Title</h5>
+                            <p class="text-muted small" th:text="${quiz.description}">Quiz description</p>
+<!--                            <span class="badge" th:classappend="${quiz.active} ? 'bg-success' : 'bg-secondary'"-->
+<!--                                th:text="${quiz.active} ? 'Active' : 'Inactive'">-->
+<!--                                Active-->
+<!--                            </span>-->
+
+                            <div class="mt-3 d-flex justify-content-end gap-2">
+                                <a th:href="@{'/admin/quiz/' + ${quiz.id}}"
+                                    class="btn btn-sm btn-outline-primary">View</a>
+                                <a th:href="@{'/admin/quiz/edit/' + ${quiz.id}}"
+                                    class="btn btn-sm btn-outline-secondary">Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</th:block>
+
+<th:block th:fragment="pageJs">
+    <!--    <script th:src="@{/assets/js/login.js}"></script>-->
+</th:block>
+
+</html>

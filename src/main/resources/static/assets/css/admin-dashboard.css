@@ -1,0 +1,52 @@
+:root {
+    /* 3–5 color palette */
+    --brand: #ff8d0b;
+    /* primary */
+    --bg: #ffffff;
+    /* neutral */
+    --text: #0f172a;
+    /* neutral - near-slate-900 */
+    --muted: #6b7280;
+    /* neutral gray for secondary text */
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+.btn-brand {
+    text-decoration: none;
+    appearance: none;
+    border: none;
+    border-radius: 0.375rem;
+    padding: 5px 55px;
+    background: var(--brand);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-brand:hover,
+.btn-brand:focus {
+    background-color: #e67f09;
+    color: #ffffff;
+}
+
+.section-title {
+    border-left: 5px solid var(--brand);
+    padding-left: 10px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.quiz-card {
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+}
+
+.quiz-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}

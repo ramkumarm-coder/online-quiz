@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout (~{::pageContent}, ~{::pageCss}, ~{::pageJs}, title)">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title from page -->
+    <title th:text="${title} + ' | Online Quiz App'">Online Quiz App</title>
+
+    <!-- CSRF Token -->
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap-5.3.2/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/data-table-2.0.5/datatables.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/site-login.css}">
+
+    <th:block th:replace="~{::pageCss}"></th:block>
+</head>
+<body>
+<div class="d-flex flex-column min-vh-100">
+
+    <!-- Header -->
+    <header class="container py-4" role="banner" aria-label="Header">
+        <div class="d-flex flex-column align-items-center">
+            <h1 class="h3 fw-bold text-center login-header-title mb-2">Online Quiz Application</h1>
+            <span class="login-accent d-inline-block" aria-hidden="true"></span>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="d-flex flex-fill flex-column mt-4">
+        <th:block th:replace="~{::pageContent}"></th:block>
+    </main>
+
+    <!-- Footer -->
+    <footer class="login-footer mt-5 py-3" role="contentinfo" aria-label="Footer">
+        <div class="container text-center">
+            <small class="text-white">© 2025 Online Quiz Application</small>
+        </div>
+    </footer>
+</div>
+
+<!-- JS Links -->
+<script th:src="@{/assets/vendor/jquery/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/assets/vendor/bootstrap-5.3.2/js/bootstrap.bundle.min.js}"></script>
+<th:block th:replace="~{::pageJs}"></th:block>
+</body>
+</html>
+

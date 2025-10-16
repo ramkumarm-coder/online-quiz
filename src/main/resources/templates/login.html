@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/_layoutLogin :: layout(~{::pageContent}, ~{::pageCss}, ~{::pageJs}, ${title})}">
+
+<th:block th:fragment="pageCss">
+    <link rel="stylesheet" th:href="@{/assets/css/login.css}">
+</th:block>
+
+<th:block th:fragment="pageContent">
+    <div class="d-flex flex-fill flex-column container align-items-center justify-content-center">
+        <section class="cust-card col-lg-3 col-auto" aria-labelledby="login-title">
+            <h2 id="login-title" class="text-center">Login</h2>
+            <div class="alert success text-center" th:if="${param.logout}" role="status">
+                You have been logged out successfully.
+            </div>
+            <div class="alert error text-center" th:if="${error}" th:text="${error}" role="alert">
+                error
+            </div>
+            <form id="loginForm" th:action="@{/login}" method="post" novalidate autocomplete="off">
+                <div class="field">
+                    <label for="username" class="label">Email</label>
+                    <input id="username" class="input" type="email" name="username" required inputmode="email"
+                           spellcheck="false" autocapitalize="off" autocomplete="off" minlength="5" maxlength="254"
+                           aria-describedby="usernameError" aria-invalid="false" />
+                    <p id="usernameError" class="error-text" aria-live="polite"></p>
+                </div>
+
+                <div class="field">
+                    <label for="password" class="label">Password</label>
+                    <input id="password" class="input" type="password" name="password" required
+                           autocomplete="off" minlength="8" maxlength="72" aria-describedby="passwordError"
+                           aria-invalid="false" />
+                    <p id="passwordError" class="error-text" aria-live="polite"></p>
+                </div>
+
+                <div class="actions d-flex justify-content-center">
+                    <button id="submitBtn" type="submit" class="cust-btn">Login</button>
+                </div>
+                <div class="register-link mt-4 text-center">
+                    <span>New here? </span>
+                    <a class="link" th:href="@{/register}">Create an account</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</th:block>
+
+<th:block th:fragment="pageJs">
+    <script th:src="@{/assets/js/login.js}"></script>
+</th:block>
+
+</html>
