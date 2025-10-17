@@ -10,4 +10,8 @@ public interface IAdminService {
     List<QuizCreation> findAllQuizzes();
 
     void createNewQuiz(QuizCreationRequest request);
+
+    boolean isQuizTitleAlreadyPresent(String quizTitle);
+
+    void deleteQuiz(long quizId);
 }

@@ -21,7 +21,7 @@ public class QuizCreation {
     @SequenceGenerator(name = "quiz_creation_seq", sequenceName = "quiz_creation_sequence", allocationSize = 1)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String title;
 
     @Column(nullable = false, length = 2000)

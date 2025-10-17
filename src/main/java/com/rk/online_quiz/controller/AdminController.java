@@ -5,6 +5,7 @@ import com.rk.online_quiz.dto.admin.request.QuizCreationRequest;
 import com.rk.online_quiz.entity.QuizCreation;
 import com.rk.online_quiz.service.IAdminService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,10 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -53,7 +51,7 @@ public class AdminController {
 
         model.addAttribute("quiz", new QuizCreationRequest());
 
-        return "admin/quiz-creation";
+        return "admin/quizCreation";
     }
 
     @PostMapping("/create-quiz")
@@ -70,10 +68,10 @@ public class AdminController {
             );
             model.addAttribute("breadcrumbs", breadcrumbs);
 
-            return "admin/quiz-creation";
+            return "admin/quizCreation";
         }
 
-        if ("Duplicate Quiz".equalsIgnoreCase(quiz.getTitle())) {
+        if (service.isQuizTitleAlreadyPresent(quiz.getTitle())) {
             result.reject("quizCreationError", "A quiz with this title already exists");
             model.addAttribute("title", "Add Quiz");
             model.addAttribute("pageTitle", "Add New Quiz");
@@ -83,46 +81,27 @@ public class AdminController {
             );
             model.addAttribute("breadcrumbs", breadcrumbs);
 
-            return "admin/quiz-creation";
+            return "admin/quizCreation";
         }
         //Create
         service.createNewQuiz(quiz);
+        model.addAttribute("message", "Quiz created successfully");
         return "redirect:/admin/dashboard";
     }
 
-
-    @GetMapping("/quiz/add")
-    public String showAddQuizForm(Model model) {
-        model.addAttribute("title", "Add New Quiz");
-        model.addAttribute("pageTitle", "Add Quiz");
-
-        model.addAttribute("breadcrumbs", List.of(
-                new Breadcrumb("Admin", "/admin/dashboard"),
-                new Breadcrumb("Quizzes", "/admin/quizzes"),
-                new Breadcrumb("Add Quiz", null)
-        ));
-
-        model.addAttribute("quiz", new QuizCreationRequest());
-        return "admin/add-quiz";
-    }
-
-    @PostMapping("/quiz/add")
-    public String addQuiz(@Valid @ModelAttribute("quiz") QuizCreationRequest quiz,
-                          BindingResult result,
-                          Model model) {
-
-        // Example: server-side validation
-        if ("Duplicate Quiz".equalsIgnoreCase(quiz.getTitle())) {
-            result.reject("quizCreationError", "A quiz with this title already exists");
-        }
-
+    @PostMapping("/delete-quiz/{quizId}")
+    public String deleteQuiz(Long quizId,
+                             @PathVariable("quizId")
+                             @Min(value = 1, message = "Invalid quiz ID. Must be greater than 0.")
+                             BindingResult result,
+                             Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("title", "Add Quiz");
-            return "admin/add-quiz"; // re-render form with errors
+            model.addAttribute("error", "Invalid Quiz ID");
+            return "admin/dashboard";
         }
-
-        // Save logic here
-        return "redirect:/admin/dashboard";
+        service.deleteQuiz(quizId);
+        model.addAttribute("message", "Quiz deleted successfully");
+        return "admin/dashboard";
     }
 
 }

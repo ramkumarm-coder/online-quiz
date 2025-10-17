@@ -7,6 +7,7 @@ import com.rk.online_quiz.service.IAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
 
 @Service
@@ -28,5 +29,19 @@ public class AdminServiceImpl implements IAdminService {
                 .timeLimitMinutes(request.getTimeLimitMinutes())
                 .build();
         quizCreationRepository.save(quizCreation);
+    }
+
+    @Override
+    public boolean isQuizTitleAlreadyPresent(String quizTitle) {
+        return quizCreationRepository.findByTitle(quizTitle).isPresent();
+    }
+
+    @Override
+    public void deleteQuiz(long quizId) {
+        quizCreationRepository.findById(quizId).orElseThrow(
+                () -> new ResolutionException("Quiz not found for this id: " + quizId)
+        );
+
+        quizCreationRepository.deleteById(quizId);
     }
 }
