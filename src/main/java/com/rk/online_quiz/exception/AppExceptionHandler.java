@@ -1,6 +1,7 @@
 package com.rk.online_quiz.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -85,5 +86,11 @@ public class AppExceptionHandler {
             model.addAttribute("error", ex.getMessage());
             return "error";
         }
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public String handleConstraintViolation(ConstraintViolationException ex, Model model) {
+        model.addAttribute("error", ex.getMessage());
+        return "error";
     }
 }

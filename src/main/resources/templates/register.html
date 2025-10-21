@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{fragments/_layoutLogin :: layout(~{::pageContent}, ~{::pageCss}, ~{::pageJs}, ${pageTitle})}">
+
+<th:block th:fragment="pageCss">
+    <style>
+        .cust-btn {
+            appearance: none;
+            border: none;
+            border-radius: 0.375rem;
+            padding: 5px 55px;
+            background: var(--brand);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .cust-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+    </style>
+</th:block>
+
+<th:block th:fragment="pageContent">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg border-0 rounded-4 p-4">
+                    <h3 class="text-center mb-4 fw-bold" style="color: #ff8d0b;">User Registration</h3>
+
+                    <form th:action="@{/register}" method="post" th:object="${registerUser}">
+                        <!-- Name -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Full Name</label>
+                            <input type="text" th:field="*{name}" class="form-control" placeholder="Enter your name">
+                            <div class="text-danger small" th:errors="*{name}"></div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Email Address</label>
+                            <input type="email" th:field="*{username}" class="form-control"
+                                placeholder="Enter your email">
+                            <div class="text-danger small" th:errors="*{username}"></div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Password</label>
+                            <input type="password" th:field="*{password}" class="form-control"
+                                placeholder="Enter password">
+                            <div class="text-danger small" th:errors="*{password}"></div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Confirm Password</label>
+                            <input type="password" th:field="*{confirmPassword}" class="form-control"
+                                placeholder="Re-enter password">
+                            <div class="text-danger small" th:errors="*{confirmPassword}"></div>
+                        </div>
+
+                        <button type="submit" class="cust-btn w-100 py-2">Register</button>
+
+                        <div class="text-center mt-3">
+                            <p class="mb-0">Already have an account?
+                                <a th:href="@{/login}" class="text-decoration-none" style="color: #ff8d0b;">Login
+                                    here</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="pageJs">
+</th:block>
+
+</html>

@@ -6,8 +6,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class QuizCreationRequest {
+public class QuizUpdateRequest {
 
+    @NotNull(message = "ID is required for updating an existing quiz.")
+    @Positive(message = "ID must be a positive number.")
     private Long id;
 
     @NotBlank(message = "Title is required.")

@@ -22,13 +22,13 @@ public class DataSeeder implements CommandLineRunner {
         if (loginUserRepository.findByUsername("ramkumarmegavarnan@gmail.com").isEmpty()) {
             LoginUser admin = new LoginUser();
             admin.setUsername("ramkumarmegavarnan@gmail.com");
-            admin.setPassword("{noop}Ram@1234"); // or use a password encoder
+            admin.setPassword(new BCryptPasswordEncoder().encode("Ram@1234")); // or use a password encoder
             admin.setName("System Administrator 1");
             admin.setActive(true);
             admin.setRole(UserRoles.ADMIN);
 
             loginUserRepository.save(admin);
-            System.out.println("✅ Default Admin user created: ramkumarmegavarnan@gmail.com / admin123");
+            System.out.println("✅ Default Admin user created: ramkumarmegavarnan@gmail.com / Ram@1234");
         } else {
             System.out.println("ℹ️ Admin user already exists, skipping creation.");
         }
@@ -42,9 +42,9 @@ public class DataSeeder implements CommandLineRunner {
             admin.setRole(UserRoles.PARTICIPANT);
 
             loginUserRepository.save(admin);
-            System.out.println("✅ Default Admin user created: ramkumar180499@gmail.com / admin123");
+            System.out.println("✅ Default Participant user created: ramkumar180499@gmail.com / Ram@1234");
         } else {
-            System.out.println("ℹ️ Admin user already exists, skipping creation.");
+            System.out.println("ℹ️ Participant user already exists, skipping creation.");
         }
     }
 }
