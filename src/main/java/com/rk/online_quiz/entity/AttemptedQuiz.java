@@ -37,7 +37,6 @@ public class AttemptedQuiz {
     @JoinColumn(name = "login_user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_attempt_login_user"))
     private LoginUser loginUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "quiz_creation_id", nullable = false, foreignKey = @ForeignKey(name = "fk_attempt_quiz_creation"))
-    private QuizCreation quizCreation;
+    @Column(name = "quiz_creation_id", nullable = false)
+    private Long quizCreationId;
 }

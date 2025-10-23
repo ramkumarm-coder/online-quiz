@@ -1,5 +1,6 @@
 package com.rk.online_quiz.controller;
 
+import com.rk.online_quiz.service.IParticipantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @PreAuthorize("hasRole('PARTICIPANT')")
 public class ParticipantController {
 
+    private final IParticipantService participantService;
+
     @GetMapping("/dashboard")
     public String dashboard(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         model.addAttribute("title", "Dashboard");
-
+        //Available quiz
+        participantService.findAllAvailableQuizzes();
         return "participant/dashboard";
     }
 }
