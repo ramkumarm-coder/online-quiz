@@ -6,9 +6,42 @@
 </th:block>
 
 <th:block th:fragment="pageContent">
-    <div class="d-flex flex-fill flex-column">
-        Participant Dashboard
-    </div>
+    <section class="d-flex flex-fill flex-column">
+        <!-- Success / Errors -->
+        <div th:if="${message}" th:text="${message}" class="alert alert-success">
+        </div>
+
+        <div th:if="${error}" th:text="${error}" class="alert alert-danger">
+        </div>
+
+        <div class="avail-quizzes">
+            <h4 class="h5 mb-3 section-title">Available Quizzes</h4>
+
+            <div th:if="${#lists.isEmpty(quizzes)}" class="alert alert-info">
+                No quizzes available.
+            </div>
+            <div class="">
+                <div class="row g-3" th:if="${!#lists.isEmpty(quizzes)}">
+                    <div class="col-md-4" th:each="quiz : ${quizzes}">
+                        <div class="card p-3 h-100">
+                            <h5 class="fw-bold" th:text="${quiz.title}">Quiz Title</h5>
+                            <p class="text-muted small" th:text="${quiz.description}">Quiz description</p>
+
+                            <span class="mt-2 fw-semibold small">
+                                Duration :
+                                <span th:text="${quiz.timeLimitMinutes}"></span> Minutes
+                            </span>
+                            <div class="mt-3 d-flex justify-content-end gap-2">
+                                <form th:action="@{'/participant/attend-quiz/' + ${quiz.id}}" method="post">
+                                    <button type="submit" class="btn btn-sm btn-outline-success">Attend</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </th:block>
 
 <th:block th:fragment="pageJs">
